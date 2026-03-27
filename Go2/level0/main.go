@@ -15,19 +15,34 @@ type Ticket struct {
 
 func GetTasks(text string, user *string, status *string) []Ticket {
 	var tickets []Ticket
+	if status != nil {
+		if *status != "Готово" && *status != "В работе" && *status != "Не будет сделано" {
+			return tickets
+		}
+	}
 	lines := strings.Split(text, "\n")
 	for _, line := range lines {
+		line = strings.TrimSpace(line)
 		if strings.HasPrefix(line, "TICKET") {
 		} else {
 			continue
 		}
 		var mTicket Ticket
+		if strings.Index(line, "_") == -1 {
+			continue
+		}
 		mTicket.Ticket = line[:strings.Index(line, "_")]
 		line = line[strings.Index(line, "_")+1:]
 
+		if strings.Index(line, "_") == -1 {
+			continue
+		}
 		mTicket.User = line[:strings.Index(line, "_")]
 		line = line[strings.Index(line, "_")+1:]
 
+		if strings.Index(line, "_") == -1 {
+			continue
+		}
 		mTicket.Status = line[:strings.Index(line, "_")]
 		line = line[strings.Index(line, "_")+1:]
 
