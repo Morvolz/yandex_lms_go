@@ -11,5 +11,5 @@ func ReadContent(filename string) string {
 }
 
 func main() {
-	fmt.Printf(ReadContent("literature.txt"), "\n")
+	fmt.Printf(ReadContent("task1/literature.txt"), "\n")
 }
