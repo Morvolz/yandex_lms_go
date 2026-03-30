@@ -8,7 +8,7 @@ func Copy(r io.Reader, w io.Writer, n uint) error {
 	buf := make([]byte, n)
 	data, err := io.ReadFull(r, buf)
 
-	if err != nil {
+	if err != nil && err != io.ErrUnexpectedEOF {
 		return err
 	}
 
