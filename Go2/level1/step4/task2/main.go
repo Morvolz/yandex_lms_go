@@ -12,15 +12,14 @@ type Сount interface {
 	GetValue() int // получение текущего значения
 }
 
-func (c Counter) Increment() {
-	c.mu.RLock()
+func (c *Counter) Increment() {
+	c.mu.Lock()
 	c.value++
-	c.mu.RUnlock()
+	c.mu.Unlock()
 }
 
-func (c Counter) GetValue() int {
+func (c *Counter) GetValue() int {
 	c.mu.RLock()
-	val := c.value
-	c.mu.RUnlock()
-	return val
+	defer c.mu.RUnlock()
+	return c.value
 }
