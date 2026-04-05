@@ -31,5 +31,9 @@ func Contains(ctx context.Context, r io.Reader, seq []byte) (bool, error) {
 		if bytes.Index(data, seq) >= 0 {
 			return true, nil
 		}
+
+		if len(data) >= len(seq) {
+			data = data[len(data)-len(seq):]
+		}
 	}
 }
